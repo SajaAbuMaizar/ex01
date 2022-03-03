@@ -18,6 +18,7 @@ public:
 
 private:
 	std::vector<std::string> m_commands;
+	std::vector<std::unique_ptr<Set>> m_input;
 	Set calculateResult(std::string command);
 
 };

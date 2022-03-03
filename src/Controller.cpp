@@ -30,8 +30,15 @@ void Controller::run()
 void Controller::handleEvaluation()
 {
 	int command;
+	int num_of_nums;
 	std::cin >> command;
 	std::string temp = m_commands[command];
+	//take in unput
+	cin << num_of_nums;
+	for ()
+	{
+
+	}
 	Set result = calculateResult(temp);
 	std::cout << result;
 }
