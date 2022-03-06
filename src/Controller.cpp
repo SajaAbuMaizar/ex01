@@ -5,6 +5,8 @@ Controller::Controller()
 	m_commands.push_back("(AUB)");
 	m_commands.push_back("(A^B)");
 	m_commands.push_back("(A-B)");
+	for (int i = 0; i < m_commands.size(); i++) //number of sets that we need for input
+		m_num_of_params.push_back(2);
 }
 
 
@@ -33,11 +35,20 @@ void Controller::handleEvaluation()
 	int num_of_nums;
 	std::cin >> command;
 	std::string temp = m_commands[command];
-	//take in unput
-	cin << num_of_nums;
-	for ()
+	//take in input
+	for (int sets = 0; sets < m_num_of_params[command]; sets++ )//sets=input for command
 	{
-
+		int num_of_members;
+		std::vector<int> temp_members;
+		std::cin >> num_of_members;
+		for (int members = 0; members < num_of_members; members++)
+		{
+			int num;
+			std::cin >> num;
+			temp_members.push_back(num);
+		}
+		Set temp_set(temp_members);
+		m_input.emplace_back(std::make_unique<Set>(temp_members));
 	}
 	Set result = calculateResult(temp);
 	std::cout << result;
@@ -53,15 +64,61 @@ Set Controller::calculateResult(std::string command)
 			leftPar++;
 		if (command[i] == ')')
 			rightPar++;
-		if (command[i] == 'U' || command[i] == '^' || command[i] == '-')
+		if (command[i] == 'U' || command[i] == '^' || command[i] == '-') // add * and ->
 		{
-			if (leftPar - 1 == rightPar) // this means that we reached the central action
+			if (leftPar -1 == 0 && rightPar == 0) //stop condition
 			{
-				std::string = 
+				if (command[i] == 'U')
+				{
+					Set temp_res = Union(*m_input[0], *m_input[1]);
+					m_input.erase(m_input.begin(),m_input.begin()+1);
+					return temp_res;
+				}
+				else if (command[i] == '^')
+				{
+					Set temp_res = Intersection(*m_input[0], *m_input[1]);
+					m_input.erase(m_input.begin(), m_input.begin() + 1);
+					return temp_res;
+				}
+				else if (command[i] == '-')
+				{
+					Set temp_res = Difference(*m_input[0], *m_input[1]);
+					m_input.erase(m_input.begin(), m_input.begin() + 1);
+					return temp_res;
+				}
+			}
+			else if (leftPar - 1 == rightPar) // this means that we reached the central action
+			{
+				Set left_Set = calculateResult(split_string(command,1,command[i]-1));
+				Set right_Set = calculateResult(split_string(command,command[i] + 1, command.size() - 1));
+				if (command[i] == 'U')
+				{
+					Set temp_res = Union(left_Set, right_Set);
+					return temp_res;
+				}
+				else if (command[i] == '^')
+				{
+					Set temp_res = Intersection(left_Set, right_Set);
+					return temp_res;
+				}
+				else if (command[i] == '-')
+				{
+					Set temp_res = Difference(left_Set, right_Set);
+					return temp_res;
+				}
 			}
 		}
 	}
 }
+
+std::string Controller::split_string(std::string str, int beg, int end)
+{
+	std::string result = "";
+	for (int i = beg ; i <= end ; i++)
+		result.push_back(str[i]);
+	return result;
+}
+
 
 Set Controller::Union(const Set& s1, const Set& s2)
 {
