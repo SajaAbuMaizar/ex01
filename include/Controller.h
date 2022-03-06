@@ -5,6 +5,14 @@
 #include <iterator>
 #include "Set.h"
 
+enum Actions {
+	eval,
+	uni,
+	inter,
+	diff,
+	prod,
+	comp
+};
 
 class Controller
 {
@@ -14,7 +22,12 @@ public:
 	Set Union(const Set& s1, const Set& s2);
 	Set Intersection(const Set& s1, const Set& s2);
 	Set Difference(const Set& s1, const Set& s2);
-	void handleEvaluation();
+	Set handleEvaluation();
+	void Uni(int command1, int command2);
+	void Inter(int command1, int command2);
+	void Diff(int command1, int command2);
+	void Prod(int command1, int command2);
+	void Comp(int command1, int command2);
 
 private:
 	std::vector<std::string> m_commands;
