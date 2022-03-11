@@ -15,6 +15,7 @@ public:
 
 private:
 	Action m_action;
+	//------ helper function(s) ------
 	void readData(const int command);
 
 };

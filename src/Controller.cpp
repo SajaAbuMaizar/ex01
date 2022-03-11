@@ -4,6 +4,7 @@
 void Controller::run()
 {
 	std::string action;
+	int command, command1, command2;
 	
 	while (true)
 	{
@@ -15,8 +16,8 @@ void Controller::run()
 		std::cout << "Enter command ('help' for the list of available commands): ";
 		std::cin >> action;
 		//do sth with the action
-		if (action == "eval") {
-			int command;
+		if (action == "eval") 
+		{
 			std::cin >> command;
 			readData(command);
 			std::cout << m_action.handleEvaluation(command);
@@ -24,7 +25,6 @@ void Controller::run()
 		}
 		else
 		{
-			int command1, command2;
 			std::cin >> command1;
 			std::cin >> command2;
 			if (action == "uni")

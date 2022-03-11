@@ -29,7 +29,8 @@ std::ostream& operator<<(std::ostream& os, const Set& set)
 	os << "{ ";
 	for (size_t i = 0; i < set.getSize(); i++)
 	{
-		os << set[i] << ", ";
+		os << set[i] ;
+		(i + 1 < set.getSize()) ? os << ", " : os << "";
 	}
 	os << " }";
 

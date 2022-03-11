@@ -22,6 +22,7 @@ private:
 	std::vector<std::string> m_commands;
 	std::vector<int> m_num_of_params;
 	std::vector<std::unique_ptr<Set>> m_input;
+	//----- helper functions -----
 	Set calculateResult(std::string command);
 	std::string split_string(std::string str, int beg, int end);
 	
