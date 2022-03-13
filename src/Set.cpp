@@ -1,5 +1,7 @@
 #include "Set.h"
 
+//the constuctor for the set class, it creates a set
+//this means it sorts the group and erase all double values
 Set::Set(std::vector<int> v)
 {
 	std::ranges::sort(v.begin(),v.end());
@@ -22,7 +24,6 @@ std::vector<int> Set::getVector() const
 {
 	return m_vector;
 }
-
 
 std::ostream& operator<<(std::ostream& os, const Set& set)
 {

@@ -1,5 +1,6 @@
 #include "Intersection.h"
 
+//this function adds the intersection action to the list of commands
 void Intersection::Inter(int command1, int command2,
 	std::vector<std::string>& m_commands, std::vector<int>& m_num_of_params)
 {

@@ -1,5 +1,6 @@
 #include "Difference.h"
 
+//this function adds the difference action to the list of commands
 void Difference::Diff(int command1, int command2,
 	std::vector<std::string>& m_commands, std::vector<int>& m_num_of_params)
 {
