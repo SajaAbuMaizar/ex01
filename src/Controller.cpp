@@ -21,7 +21,16 @@ void Controller::run()
 		std::cout << "Enter command ('help' for the list of available commands): ";
 		std::cin >> action;
 		//do sth with the action
-		if (action == "eval") 
+		if (action == "exit")
+		{
+			std::cout << "GoodBye!\n";
+			exit(0);
+		}
+		else if (action == "help")
+		{
+			//do the help
+		}
+		else if (action == "eval") 
 		{
 			std::cin >> command;
 			readData(command);

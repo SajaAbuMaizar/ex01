@@ -5,6 +5,7 @@
 
 class Set {
 public:
+	Set() = default;
 	Set(std::vector<int> v);
 	int operator[](int index) const;
 	size_t getSize() const;

@@ -24,5 +24,7 @@ protected:
 	//----- helper functions -----
 	Set calculateResult(std::string command);
 	std::string split_string(std::string str, int beg, int end);
+	Set Production(const Set& s1, const Set& s2);
+	Set Composite(const Set& s1, const Set& s2);
 
 };

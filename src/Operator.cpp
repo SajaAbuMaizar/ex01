@@ -25,7 +25,8 @@ Set Operator::calculateResult(std::string command)
 			leftPar++;
 		if (command[i] == ')')
 			rightPar++;
-		if (command[i] == 'U' || command[i] == '^' || command[i] == '-') // add * and ->
+		if (command[i] == 'U' || command[i] == '^' || command[i] == '-'
+			|| command[i] == '*')
 		{
 			if (leftPar - 1 == 0 && rightPar == 0) //stop condition
 			{
@@ -50,26 +51,47 @@ Set Operator::calculateResult(std::string command)
 					m_input.erase(m_input.begin());
 					return temp_res;
 				}
+				else if (command[i] == '*')
+				{
+					Set temp_res = Production(*m_input[0], *m_input[1]);
+					m_input.erase(m_input.begin());
+					m_input.erase(m_input.begin());
+					return temp_res;
+				}
 			}
 
 			else if (leftPar - 1 == rightPar) // this means that we reached the central action
 			{
-				Set left_Set = calculateResult(split_string(command, 1, i - 1));
-				Set right_Set = calculateResult(split_string(command, i + 1, command.size() - 1));
-				if (command[i] == 'U')
+				if (command[i] == '-' && command[i + 1] == '>')
 				{
-					Set temp_res = Union(left_Set, right_Set);
-					return temp_res;
+					m_input.insert(m_input.begin(), std::make_unique<Set>(calculateResult(split_string(command, 1, i - 1))));
+					Set right_Set = calculateResult(split_string(command, i + 1, command.size() - 1));
+					return right_Set;
 				}
-				else if (command[i] == '^')
+				else
 				{
-					Set temp_res = Intersection(left_Set, right_Set);
-					return temp_res;
-				}
-				else if (command[i] == '-')
-				{
-					Set temp_res = Difference(left_Set, right_Set);
-					return temp_res;
+					Set left_Set = calculateResult(split_string(command, 1, i - 1));
+					Set right_Set = calculateResult(split_string(command, i + 1, command.size() - 1));
+					if (command[i] == 'U')
+					{
+						Set temp_res = Union(left_Set, right_Set);
+						return temp_res;
+					}
+					else if (command[i] == '^')
+					{
+						Set temp_res = Intersection(left_Set, right_Set);
+						return temp_res;
+					}
+					else if (command[i] == '-')
+					{
+						Set temp_res = Difference(left_Set, right_Set);
+						return temp_res;
+					}
+					else if (command[i] == '*')
+					{
+						Set temp_res = Production(left_Set, right_Set);
+						return temp_res;
+					}
 				}
 			}
 		}
@@ -79,12 +101,34 @@ Set Operator::calculateResult(std::string command)
 	return s;
 }
 
+
+
 std::string Operator::split_string(std::string str, int beg, int end)
 {
 	std::string result = "";
 	for (int i = beg; i <= end; i++)
 		result.push_back(str[i]);
 	return result;
+}
+
+Set Operator::Production(const Set& s1, const Set& s2)
+{
+	std::vector<int> result;
+	for (int i = 0; i < s1.getSize() ; i++)
+		for (int j = 0; j < s2.getSize(); j++)
+			result.push_back(s1[i] * s2[j]);
+	Set set_result(result);
+	return set_result;
+}
+
+Set Operator::Composite(const Set& s1, const Set& s2)
+{
+	std::vector<int> result;
+
+	
+
+	Set set_result(result);
+	return set_result;
 }
 
 
