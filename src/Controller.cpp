@@ -1,6 +1,11 @@
 #include "Controller.h"
 #include <string>
 
+Controller::Controller()
+{
+
+}
+
 void Controller::run()
 {
 	std::string action;
@@ -10,8 +15,8 @@ void Controller::run()
 	{
 		std::cout << "List of available set operations:\n";
 
-		for (int i = 0 ;i < m_action.getCommands().size() ; i++)
-			std::cout << i << ". " << m_action.getCommands()[i] << std::endl;
+		for (int i = 0 ;i < m_operator.getCommands().size() ; i++)
+			std::cout << i << ". " << m_operator.getCommands()[i] << std::endl;
 
 		std::cout << "Enter command ('help' for the list of available commands): ";
 		std::cin >> action;
@@ -20,23 +25,27 @@ void Controller::run()
 		{
 			std::cin >> command;
 			readData(command);
-			std::cout << m_action.handleEvaluation(command);
+			std::cout << m_operator.handleEvaluation(command);
 			std::cout << std::endl;
 		}
 		else
 		{
 			std::cin >> command1;
 			std::cin >> command2;
+			std::vector<std::string> updated_commands = m_operator.getCommands();
+			std::vector<int> updated_num = m_operator.getNumOfParameters();
 			if (action == "uni")
-				m_action.Uni(command1, command2);
+				m_uni.Uni(command1, command2, updated_commands, updated_num);
 			else if (action == "inter")
-				m_action.Inter(command1, command2);
+				m_inter.Inter(command1, command2, updated_commands, updated_num);
 			else if (action == "diff")
-				m_action.Diff(command1, command2);
+				m_diff.Diff(command1, command2, updated_commands, updated_num);
 			else if (action == "prod")
-				m_action.Prod(command1, command2);
+				m_prod.Prod(command1, command2, updated_commands, updated_num);
 			else if (action == "comp")
-				m_action.Comp(command1, command2);
+				m_comp.Comp(command1, command2, updated_commands, updated_num);
+			m_operator.setCommands(updated_commands);
+			m_operator.setNumOfParameters(updated_num);
 		}
 	}
 }
@@ -44,7 +53,7 @@ void Controller::run()
 void Controller::readData(const int command)
 {
 	//take in input
-	for (int sets = 0; sets < m_action.getNumOfParameters()[command]; sets++)//sets=input for command
+	for (int sets = 0; sets < m_operator.getNumOfParameters()[command]; sets++)//sets=input for command
 	{
 		int num_of_members;
 		std::vector<int> temp_members;
@@ -55,6 +64,6 @@ void Controller::readData(const int command)
 			std::cin >> num;
 			temp_members.push_back(num);
 		}
-		m_action.addSet(temp_members);
+		m_operator.addSet(temp_members);
 	}
 }

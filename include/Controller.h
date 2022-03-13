@@ -4,17 +4,26 @@
 #include <vector>
 #include <iterator>
 #include "Set.h"
-#include "Action.h"
-
+#include "Operator.h"
+#include "Union.h"
+#include "Intersection.h"
+#include "Difference.h"
+#include "Production.h"
+#include "Composite.h"
 
 class Controller
 {
 public:
-	Controller() = default;
+	Controller();
 	void run();
 
 private:
-	Action m_action;
+	Operator m_operator;
+	Union m_uni;
+	Intersection m_inter;
+	Difference m_diff;
+	Production m_prod;
+	Composite m_comp;
 	//------ helper function(s) ------
 	void readData(const int command);
 
