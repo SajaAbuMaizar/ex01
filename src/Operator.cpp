@@ -124,9 +124,6 @@ Set Operator::Production(const Set& s1, const Set& s2)
 Set Operator::Composite(const Set& s1, const Set& s2)
 {
 	std::vector<int> result;
-
-	
-
 	Set set_result(result);
 	return set_result;
 }
@@ -179,4 +176,14 @@ void Operator::setCommands(std::vector<std::string> updated_commands)
 void Operator::setNumOfParameters(std::vector<int> updated_num)
 {
 	m_num_of_params = updated_num;
+}
+
+void Operator::eraseCommand(int command, std::vector<std::string>& commands, std::vector<int>& params_nums_vec)
+{
+	for (int i = 0; i < commands.size(); i++)
+		if (i == command)
+		{
+			commands.erase(commands.begin()+i);
+			params_nums_vec.erase(params_nums_vec.begin()+i);
+		}
 }

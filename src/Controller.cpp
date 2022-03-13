@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include <string>
+#include <fstream>
 
 Controller::Controller()
 {
@@ -28,7 +29,10 @@ void Controller::run()
 		}
 		else if (action == "help")
 		{
-			//do the help
+			std::ifstream help("Help.txt");
+			if (help.is_open())
+				std::cout << help.rdbuf();
+
 		}
 		else if (action == "eval") 
 		{
@@ -36,6 +40,15 @@ void Controller::run()
 			readData(command);
 			std::cout << m_operator.handleEvaluation(command);
 			std::cout << std::endl;
+		}
+		else if (action == "del")
+		{
+			std::cin >> command;
+			std::vector<std::string> updated_commands = m_operator.getCommands();
+			std::vector<int> updated_num = m_operator.getNumOfParameters();
+			m_operator.eraseCommand(command, updated_commands, updated_num);
+			m_operator.setCommands(updated_commands);
+			m_operator.setNumOfParameters(updated_num);
 		}
 		else
 		{

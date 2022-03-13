@@ -14,6 +14,7 @@ public:
 	void addSet(std::vector<int> temp_members);
 	void setCommands(std::vector<std::string> commands);
 	void setNumOfParameters(std::vector<int> updated_num);
+	void eraseCommand(int command, std::vector<std::string>& commands, std::vector<int>& params_nums_vec);
 
 private:
 
